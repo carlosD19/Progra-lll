@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>WinExe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RelojMarcadorDAL\RelojMarcadorDAL.csproj" />
+    <ProjectReference Include="..\RelojMarcadorENL\RelojMarcadorENL.csproj" />
+  </ItemGroup>
+
+</Project>

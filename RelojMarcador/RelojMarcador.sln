@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelojMarcador", "RelojMarcador\RelojMarcador.csproj", "{BBCA1005-FAC6-4370-9C14-2A9F3280D04B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2101A303-7F7C-47E3-AF80-C52218C42C66} = {2101A303-7F7C-47E3-AF80-C52218C42C66}
+		{4BF17F68-3C77-4C77-B3F6-803E37321899} = {4BF17F68-3C77-4C77-B3F6-803E37321899}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelojMarcadorBOL", "RelojMarcadorBOL\RelojMarcadorBOL.csproj", "{4BF17F68-3C77-4C77-B3F6-803E37321899}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2101A303-7F7C-47E3-AF80-C52218C42C66} = {2101A303-7F7C-47E3-AF80-C52218C42C66}
+		{631E54C7-85DC-4CC4-A46D-1C780761E2E2} = {631E54C7-85DC-4CC4-A46D-1C780761E2E2}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelojMarcadorDAL", "RelojMarcadorDAL\RelojMarcadorDAL.csproj", "{631E54C7-85DC-4CC4-A46D-1C780761E2E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2101A303-7F7C-47E3-AF80-C52218C42C66} = {2101A303-7F7C-47E3-AF80-C52218C42C66}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelojMarcadorENL", "RelojMarcadorENL\RelojMarcadorENL.csproj", "{2101A303-7F7C-47E3-AF80-C52218C42C66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBCA1005-FAC6-4370-9C14-2A9F3280D04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCA1005-FAC6-4370-9C14-2A9F3280D04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCA1005-FAC6-4370-9C14-2A9F3280D04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCA1005-FAC6-4370-9C14-2A9F3280D04B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF17F68-3C77-4C77-B3F6-803E37321899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF17F68-3C77-4C77-B3F6-803E37321899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF17F68-3C77-4C77-B3F6-803E37321899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF17F68-3C77-4C77-B3F6-803E37321899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{631E54C7-85DC-4CC4-A46D-1C780761E2E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{631E54C7-85DC-4CC4-A46D-1C780761E2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{631E54C7-85DC-4CC4-A46D-1C780761E2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{631E54C7-85DC-4CC4-A46D-1C780761E2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2101A303-7F7C-47E3-AF80-C52218C42C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2101A303-7F7C-47E3-AF80-C52218C42C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2101A303-7F7C-47E3-AF80-C52218C42C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2101A303-7F7C-47E3-AF80-C52218C42C66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1663E58-548A-4660-958E-4570F1168707}
+	EndGlobalSection
+EndGlobal
