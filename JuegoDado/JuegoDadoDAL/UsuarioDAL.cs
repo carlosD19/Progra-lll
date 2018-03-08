@@ -23,13 +23,18 @@ namespace JuegoDadoDAL
                     NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
                     cmd.Parameters.AddWithValue("@usu", usuario.Usuario);
 
-                    return cmd.ExecuteNonQuery() > 0;
+                    if(cmd.ExecuteNonQuery() > 0)
+                    {
+                        return dal.Guardar(usuario.Id, puntaje);
+                    }
+                    return false;
                 }
             }
             else
             {
-                if (VerificarUsuario(usuario))
+                if (VerificarUsuario(usuario) != 0)
                 {
+                    usuario.Id = VerificarUsuario(usuario);
                     return dal.Guardar(usuario.Id, puntaje);
                 }
                 return false;
@@ -52,24 +57,27 @@ namespace JuegoDadoDAL
             }
         }
 
-        private bool VerificarUsuario(UsuarioENL usuario)
+        private int VerificarUsuario(UsuarioENL usuario)
         {
-            string s = usuario.Fecha.ToString();
-            string s2 = DateTime.Parse(s).ToShortDateString();
             using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
             {
+                string date = DateTime.Now.Date.ToString("yyyy/MM/dd");
                 //Abrir una conexion
                 con.Open();
                 //Definir la consulta
-                string sql = @"select usuario
-                            from usuario where (usuario = @usuario, and fecha != @fec)";
+                string sql = "select * from usuario where usuario = @usu";
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-                cmd.Parameters.AddWithValue("@usuario", usuario.Usuario);
-                cmd.Parameters.AddWithValue("@fec", s2);
+                cmd.Parameters.AddWithValue("@usu", usuario.Usuario);
                 NpgsqlDataReader reader = cmd.ExecuteReader();
-
-                DateTime date = DateTime.Now;
-                return reader.Read();
+                if (reader.Read())
+                {
+                    string fecha = reader["fecha"].ToString();
+                    if (!fecha.Equals(date))
+                    {
+                        return Int32.Parse(reader["usuario"].ToString());
+                    }
+                }
+                return 0;
             }
         }
     }
