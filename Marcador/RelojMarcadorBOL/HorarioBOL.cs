@@ -10,11 +10,16 @@ namespace RelojMarcadorBOL
 {
     public class HorarioBOL
     {
-        public HorarioDAL dal = new HorarioDAL();
+        private HorarioDAL dal;
 
-        public bool AgregarHorario(Horario horario, bool funcion)
+        public HorarioBOL()
         {
-            if (String.IsNullOrEmpty(horario.Dia))
+            dal = new HorarioDAL();
+        }
+
+        public void VerificarHorario(Horario horario, bool funcion, string ruta, string cod)
+        {
+            if (String.IsNullOrEmpty(horario.Dia.ToString()))
             {
                 throw new Exception("Día requerido.");
             }
@@ -29,13 +34,32 @@ namespace RelojMarcadorBOL
             }
             if (!funcion)
             {
-                return dal.ModificarHorario(horario);
+                dal.ModificarHorario(horario, ruta, cod);
             }
-            return dal.GuardarHorario(horario);
+            else if (funcion)
+            {
+                dal.AñadirHorario(horario, ruta);
+            }
         }
-        public bool EliminarHorario(string cod)
+
+        public void CrearArchivo(string ruta, string nodoRaiz)
         {
-            return dal.EliminarHorario(cod);
+            if (String.IsNullOrEmpty(ruta)
+                || String.IsNullOrEmpty(nodoRaiz))
+            {
+                throw new Exception("Datos requeridos para crear archivo.");
+            }
+            dal.CrearArchivo(ruta, nodoRaiz);
+        }
+
+        public List<Horario> CargarTodo(string ruta)
+        {
+            return dal.CargarTodo(ruta);
+        }
+
+        public void EliminarHorario(Horario horario, string cod, string ruta)
+        {
+            dal.Eliminar(horario, cod, ruta);
         }
     }
 }

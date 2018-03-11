@@ -109,6 +109,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RelojMarcadorBOL\RelojMarcadorBOL.csproj">
+      <Project>{684D3B9F-6EEF-41B3-AB85-4C0F706EB695}</Project>
+      <Name>RelojMarcadorBOL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RelojMarcadorDAL\RelojMarcadorDAL.csproj">
+      <Project>{14AF826C-88B7-4AC5-ADCE-E1C944398007}</Project>
+      <Name>RelojMarcadorDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RelojMarcadorENL\RelojMarcadorENL.csproj">
       <Project>{9cff01f3-811b-4ba0-b6af-f1acd132c3be}</Project>
       <Name>RelojMarcadorENL</Name>
