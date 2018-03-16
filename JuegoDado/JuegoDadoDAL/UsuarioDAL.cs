@@ -2,82 +2,160 @@
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JuegoDadoDAL
 {
     public class UsuarioDAL
     {
-        private DadoDAL dal = new DadoDAL();
+        DadoDAL dal;
+
         public bool Guardar(UsuarioENL usuario, DadoENL puntaje)
         {
-            if (!VerificarExistencia(usuario))
+            dal = new DadoDAL();
+            try
             {
-                using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
+                int bus = VerificarExistencia(usuario);
+                if (bus == 0)
                 {
-                    con.Open();
-                    string sql = @"INSERT INTO usuario(usuario)
-	                            VALUES (@usu);";
-                    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-                    cmd.Parameters.AddWithValue("@usu", usuario.Usuario);
-
-                    if(cmd.ExecuteNonQuery() > 0)
+                    using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
                     {
+                        con.Open();
+                        string sql = @"INSERT INTO usuario(usuario)
+	                            VALUES (@usu);";
+                        NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+                        cmd.Parameters.AddWithValue("@usu", usuario.Usuario);
+                        if (cmd.ExecuteNonQuery() > 0)
+                        {
+                            usuario.Id = VerificarExistencia(usuario);
+                            return dal.Guardar(usuario.Id, puntaje);
+                        }
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (VerificarUsuario(usuario) != 0)
+                    {
+                        usuario.Id = VerificarUsuario(usuario);
                         return dal.Guardar(usuario.Id, puntaje);
                     }
                     return false;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                if (VerificarUsuario(usuario) != 0)
-                {
-                    usuario.Id = VerificarUsuario(usuario);
-                    return dal.Guardar(usuario.Id, puntaje);
-                }
-                return false;
+                throw new Exception(ex.Message);
             }
         }
 
-        private bool VerificarExistencia(UsuarioENL usuario)
+        public List<UsuarioENL> CargarTodo()
         {
+            List<UsuarioENL> usuarios = new List<UsuarioENL>();
             using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
             {
                 //Abrir una conexion
                 con.Open();
                 //Definir la consulta
-                string sql = @"select usuario
-                            from usuario where (usuario = @usuario)";
+                string sql = @"select * from usuario";
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-                cmd.Parameters.AddWithValue("@usuario", usuario.Usuario);
+
                 NpgsqlDataReader reader = cmd.ExecuteReader();
-                return reader.Read();
+
+                while (reader.Read())
+                {
+                    usuarios.Add(CargarUsuario(reader));
+                }
+            }
+
+            return usuarios;
+        }
+
+        private UsuarioENL CargarUsuario(NpgsqlDataReader reader)
+        {
+            UsuarioENL usuario = new UsuarioENL();
+            usuario.Id = Int32.Parse(reader["id"].ToString());
+            usuario.Usuario = reader["usuario"].ToString();
+            return usuario;
+        }
+
+        internal bool ModificarFecha(int id)
+        {
+            try
+            {
+                using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
+                {
+                    con.Open();
+                    string sql = @"UPDATE usuario
+	                            SET fecha=@fec
+	                            WHERE id=@id";
+                    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@fec", DateTime.Now.Date);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        private int VerificarUsuario(UsuarioENL usuario)
+        private int VerificarExistencia(UsuarioENL usuario)
         {
             using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
             {
-                string date = DateTime.Now.Date.ToString("yyyy/MM/dd");
                 //Abrir una conexion
                 con.Open();
                 //Definir la consulta
-                string sql = "select * from usuario where usuario = @usu";
+                string sql = @"select *
+                            from usuario where usuario = @usu";
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@usu", usuario.Usuario);
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    string fecha = reader["fecha"].ToString();
-                    if (!fecha.Equals(date))
-                    {
-                        return Int32.Parse(reader["usuario"].ToString());
-                    }
+                    usuario.Id = Int32.Parse(reader["id"].ToString());
+                    return usuario.Id;
                 }
-                return 0;
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        private int VerificarUsuario(UsuarioENL usuario)
+        {
+            try
+            {
+                using (NpgsqlConnection con = new NpgsqlConnection(Configuracion.ConStr))
+                {
+                    string date = DateTime.Now.Date.ToString();
+                    //Abrir una conexion
+                    con.Open();
+                    //Definir la consulta
+                    string sql = "select * from usuario where usuario = @usu";
+                    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+                    cmd.Parameters.AddWithValue("@usu", usuario.Usuario);
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        string fecha = reader["fecha"].ToString();
+                        if (!fecha.Equals(date))
+                        {
+                            return Int32.Parse(reader["id"].ToString());
+                        }
+                        else
+                        {
+                            throw new Exception("El usuario ya jugó.");
+                        }
+                    }
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -25,5 +25,11 @@ namespace JuegoDadoBOL
             }
             return dal.Guardar(usuario, puntaje);
         }
+
+        public List<UsuarioENL> CargarTodo()
+        {
+            dal = new UsuarioDAL();
+            return dal.CargarTodo();
+        }
     }
 }

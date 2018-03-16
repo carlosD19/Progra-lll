@@ -39,6 +39,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.txtUsu = new System.Windows.Forms.TextBox();
             this.txtResultado = new System.Windows.Forms.RichTextBox();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.spNum)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,12 +162,24 @@
             this.txtResultado.TabIndex = 7;
             this.txtResultado.Text = "";
             // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(301, 444);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "TOP 5";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // FrmJuego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(652, 479);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.txtResultado);
             this.Controls.Add(this.txtUsu);
             this.Controls.Add(this.button3);
@@ -198,6 +211,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox txtUsu;
         private System.Windows.Forms.RichTextBox txtResultado;
+        private System.Windows.Forms.Button button4;
     }
 }
 

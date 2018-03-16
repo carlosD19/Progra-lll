@@ -110,7 +110,7 @@ namespace JuegoDado
                     usu.Usuario = txtUsu.Text.Trim();
                     usu.Fecha = DateTime.Now.Date;
                     puntaje.Puntaje = puntos;
-                    if(bol.VerificarUsu(usu, puntaje))
+                    if (bol.VerificarUsu(usu, puntaje))
                     {
                         MessageBox.Show("Guardado con éxito.");
                     }
@@ -124,7 +124,19 @@ namespace JuegoDado
                     MessageBox.Show(ex.Message);
                 }
             }
+            Limpiar();
         }
+
+        private void Limpiar()
+        {
+            txtResultado.Text = "";
+            btnDadoUno.Enabled = true;
+            btnDadoDos.Enabled = true;
+            txtUsu.Text = "";
+            tiros = 0;
+            puntos = 0;
+        }
+
         private Image AsignarImagen(int num1)
         {
             if (num1 == 1)
@@ -152,6 +164,12 @@ namespace JuegoDado
                 return Properties.Resources._6;
             }
             return null;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FrmTop frm = new FrmTop();
+            frm.Show();
         }
     }
 }
